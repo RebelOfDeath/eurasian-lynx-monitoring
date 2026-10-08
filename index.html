@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watching the lynx, lightly: Sustainable AI for Eurasian Lynx Monitoring</title>
+  <meta name="description" content="A scrollytelling companion to our CS4800 report: an accurate, energy-frugal and affordable AI camera-trap system for Eurasian lynx monitoring in Central Europe.">
+  <meta property="og:title" content="Watching the lynx, lightly">
+  <meta property="og:description" content="Sustainable AI for Eurasian lynx monitoring in Central Europe. TU Delft, CS4800 Group 19.">
+  <meta property="og:image" content="assets/img/hero-lynx.jpg">
+  <link rel="preload" href="assets/fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23101713'/%3E%3Cpath d='M9 24 L11 7 L16 13 L21 7 L23 24 Z' fill='%23d27a2c'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#case">Skip to the story</a>
+
+<!-- ============ Top bar: progress + chapter nav ============ -->
+<header class="topbar" id="topbar">
+  <div class="topbar__progress" aria-hidden="true"><span id="progress"></span></div>
+  <nav class="topbar__nav" aria-label="Chapters">
+    <a class="topbar__brand" href="#top">Lynx, lightly</a>
+    <ol>
+      <li><a href="#case" data-nav="case">The case</a></li>
+      <li><a href="#data" data-nav="data">Data</a></li>
+      <li><a href="#training" data-nav="training">Training</a></li>
+      <li><a href="#deployment" data-nav="deployment">Deployment</a></li>
+      <li><a href="#impact" data-nav="impact">Impact</a></li>
+      <li><a href="#sources" data-nav="sources">Sources</a></li>
+    </ol>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ Hero ============ -->
+<section class="hero theme-dark" id="top" data-stop>
+  <div class="hero__media" aria-hidden="true">
+    <img src="assets/img/hero-lynx.jpg" alt="" fetchpriority="high">
+  </div>
+  <div class="hero__shade" aria-hidden="true"></div>
+  <div class="hero__content">
+    <h1 class="hero__title">
+      <span class="hero__line"><span>Watching the lynx,</span></span>
+      <span class="hero__line"><span><em>lightly</em></span></span>
+    </h1>
+    <p class="hero__dek hero__line"><span>An AI camera trap for Eurasian lynx that is accurate, frugal with energy, and affordable.</span></p>
+    <p class="byline hero__line"><span>Roham Koohestani &amp; Nina Semjanová<br>TU Delft, CS4800, September 2026</span></p>
+  </div>
+</section>
+
+<!-- ============ Scene 1: the case ============ -->
+<section class="chapter theme-light" id="case" data-chapter="case">
+  <header class="chapter__head" data-stop>
+    <p class="chapter__num" data-reveal>The case</p>
+    <h2 data-reveal>An elusive cat, a forest of cameras</h2>
+  </header>
+
+  <div class="scrolly" data-graphic="tension">
+    <div class="scrolly__graphic">
+      <figure class="graphic graphic--tension" id="g-tension">
+        <div class="pane pane--portrait is-active" data-pane="portrait">
+          <img src="assets/img/lynx-portrait.jpg" alt="A Eurasian lynx walking through snow towards the camera.">
+          <div class="portrait__stats">
+            <p class="stat"><span class="stat__value" data-count="9000" data-prefix="≈">≈9,000</span><span class="stat__label">Eurasian lynx in Europe</span></p>
+            <p class="stat"><span class="stat__value" data-count="11">11</span><span class="stat__label">populations, mainly stable</span></p>
+          </div>
+        </div>
+        <div class="pane pane--triangle" data-pane="triangle">
+          <svg viewBox="0 0 600 560" role="img" aria-labelledby="tri-title">
+            <title id="tri-title">Three demands pulling against each other: accuracy, energy and cost.</title>
+            <polygon class="tri__edge" points="300,70 70,470 530,470"></polygon>
+            <g class="tri__pull" data-i="0">
+              <line x1="300" y1="320" x2="300" y2="70"></line>
+              <circle cx="300" cy="70" r="12"></circle>
+              <text x="300" y="18" text-anchor="middle" class="tri__label">Accuracy</text>
+              <text x="300" y="42" text-anchor="middle" class="tri__sub">detect lynx reliably</text>
+            </g>
+            <g class="tri__pull" data-i="1">
+              <line x1="300" y1="320" x2="70" y2="470"></line>
+              <circle cx="70" cy="470" r="12"></circle>
+              <text x="70" y="512" text-anchor="middle" class="tri__label">Energy</text>
+              <text x="70" y="534" text-anchor="middle" class="tri__sub">limited power, remote forest</text>
+            </g>
+            <g class="tri__pull" data-i="2">
+              <line x1="300" y1="320" x2="530" y2="470"></line>
+              <circle cx="530" cy="470" r="12"></circle>
+              <text x="530" y="512" text-anchor="middle" class="tri__label">Cost</text>
+              <text x="530" y="534" text-anchor="middle" class="tri__sub">conservation budgets</text>
+            </g>
+            <circle class="tri__core" cx="300" cy="320" r="7"></circle>
+            <g class="tri__decisions">
+              <text x="300" y="262" text-anchor="middle"><tspan class="tri__n">1</tspan> What data to train on</text>
+              <text x="300" y="300" text-anchor="middle"><tspan class="tri__n">2</tspan> How to train efficiently</text>
+              <text x="300" y="338" text-anchor="middle"><tspan class="tri__n">3</tspan> Where inference happens</text>
+            </g>
+          </svg>
+        </div>
+      </figure>
+    </div>
+    <div class="scrolly__steps">
+      <div class="step" data-step="0" data-stop>
+        <div class="step__card">
+          <p>About <b>9,000 lynx</b> live in Europe, in 11 mostly stable populations <a class="cite" data-cite="ECFactsLynx,IUCNLynxLynx"></a>.</p>
+          <p>Researchers follow individual cats with <b>camera traps</b>, over long sessions and many seasons <a class="cite" data-cite="Weingarth2015HideSeek,Dula2021Carpathian"></a>.</p>
+        </div>
+      </div>
+      <div class="step" data-step="1" data-stop>
+        <div class="step__card">
+          <p>An AI that sorts them is pulled three ways:</p>
+          <ul class="pulls">
+            <li><b>Accuracy</b>: find the lynx</li>
+            <li><b>Energy</b>: batteries in a remote forest</li>
+            <li><b>Cost</b>: conservation budgets</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step" data-step="2" data-stop>
+        <div class="step__card">
+          <p>So we make three decisions: <a href="#data">what data</a>, <a href="#training">how to train</a>, and <a href="#deployment">where to run it</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Scene 2: training data ============ -->
+<section class="chapter theme-dark" id="data" data-chapter="data">
+  <header class="chapter__head" data-stop>
+    <p class="chapter__num" data-reveal>Part 1.1: Training data</p>
+    <h2 data-reveal>What the model learns from</h2>
+  </header>
+
+  <div class="scrolly" data-graphic="data">
+    <div class="scrolly__graphic">
+      <figure class="graphic graphic--data" id="g-data">
+        <div class="pane pane--dots is-active" data-pane="dots">
+          <canvas class="dots__canvas" aria-label="39,760 dots, one for each CzechLynx image." role="img"></canvas>
+          <div class="dots__stats">
+            <p class="stat"><span class="stat__value" data-count="39760">39,760</span><span class="stat__label">camera-trap images</span></p>
+            <p class="stat"><span class="stat__value" data-count="319">319</span><span class="stat__label">identified individuals</span></p>
+            <p class="stat"><span class="stat__value" data-count="15">15</span><span class="stat__label">years of monitoring</span></p>
+          </div>
+          <figcaption class="graphic__caption">One dot per CzechLynx image.</figcaption>
+        </div>
+        <div class="pane pane--pose" data-pane="pose">
+          <div class="pose__frame">
+            <img src="assets/img/lynx-portrait.jpg" alt="The same lynx photograph with an illustrative 20-point pose skeleton drawn over it.">
+            <svg class="pose__svg" viewBox="0 0 1200 1079" preserveAspectRatio="none" aria-hidden="true"></svg>
+          </div>
+          <figcaption class="graphic__caption">Illustrative 20-point skeleton, placed by hand. CzechLynx ships annotations of this kind for every image.</figcaption>
+        </div>
+        <div class="pane pane--broaden" data-pane="broaden">
+          <div class="broaden__stats">
+            <p class="stat"><span class="stat__value">2M+</span><span class="stat__label">DeepFaune images, 50+ partners</span></p>
+            <p class="stat"><span class="stat__value" data-count="97" data-suffix="%">97%</span><span class="stat__label">accuracy after retraining for 24 North American taxa</span></p>
+          </div>
+          <div class="waffle" role="img" aria-label="Waffle chart: 76 of 100 squares are empty frames, 24 contain an animal."></div>
+          <div class="legend">
+            <span><i class="swatch swatch--muted"></i>Empty frame (≈76%)</span>
+            <span><i class="swatch swatch--amber"></i>Animal present</span>
+          </div>
+          <figcaption class="graphic__caption">Snapshot Serengeti, ≈7.1 million images: roughly three in four are empty.</figcaption>
+        </div>
+        <div class="pane pane--split" data-pane="split">
+          <div class="split">
+            <div class="split__panel"><p class="split__title">Random split</p><svg class="split__svg" data-mode="random" viewBox="0 0 300 220" aria-hidden="true"></svg><p class="split__note">Every site leaks into validation</p></div>
+            <div class="split__panel"><p class="split__title">Geo-aware split</p><svg class="split__svg" data-mode="geo" viewBox="0 0 300 220" aria-hidden="true"></svg><p class="split__note">Whole sites held out</p></div>
+          </div>
+          <div class="legend">
+            <span><i class="swatch swatch--spruce"></i>Training image</span>
+            <span><i class="swatch swatch--amber"></i>Validation image</span>
+          </div>
+          <figcaption class="graphic__caption">Each cluster is one camera site. Schematic.</figcaption>
+        </div>
+      </figure>
+    </div>
+    <div class="scrolly__steps">
+      <div class="step" data-step="0" data-pane="dots" data-stop>
+        <div class="step__card">
+          <p>Our core dataset is <b>CzechLynx</b>: 39,760 images of 319 known individuals over 15 years <a class="cite" data-cite="Picek2026CzechLynx,Picek2026CzechLynxData"></a>.</p>
+        </div>
+      </div>
+      <div class="step" data-step="1" data-pane="pose" data-stop>
+        <div class="step__card">
+          <p>Every image has a <b>pose skeleton</b> and a segmentation mask, plus synthetic images to fill the gaps <a class="cite" data-cite="Picek2026CzechLynx"></a>.</p>
+        </div>
+      </div>
+      <div class="step" data-step="2" data-pane="broaden" data-stop>
+        <div class="step__card">
+          <p>One forest is not enough, so we add <b>DeepFaune</b>, 2M+ European images <a class="cite" data-cite="Rigoudy2023DeepFaune,Clarfeld2025DeepFauneNE"></a>.</p>
+          <p>And we add <b>empty frames</b> and other species: about 76% of Snapshot Serengeti is empty <a class="cite" data-cite="LILABC,SnapshotEurope"></a>.</p>
+        </div>
+      </div>
+      <div class="step" data-step="3" data-pane="split" data-stop>
+        <div class="step__card">
+          <p>Models that ace a familiar site often fail at a new one <a class="cite" data-cite="Beery2018TerraIncognita"></a>. So we split <b>by location</b>: we always test on unseen sites.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Scene 3: training strategy ============ -->
+<section class="chapter theme-light" id="training" data-chapter="training">
+  <header class="chapter__head" data-stop>
+    <p class="chapter__num" data-reveal>Part 1.2: Training strategy</p>
+    <h2 data-reveal>Small models, modest GPUs</h2>
+  </header>
+
+  <div class="scrolly" data-graphic="training">
+    <div class="scrolly__graphic">
+      <figure class="graphic graphic--bars" id="g-training">
+        <p class="bars__title" aria-live="polite"></p>
+        <div class="bars" role="img"></div>
+        <p class="bars__axis"></p>
+        <figcaption class="graphic__caption bars__caption"></figcaption>
+      </figure>
+    </div>
+    <div class="scrolly__steps">
+      <div class="step" data-step="0" data-stop>
+        <div class="step__card">
+          <p>We start small. <b>EfficientNet-B0</b> has 5x fewer parameters than ResNet-50 <a class="cite" data-cite="Tan2019EfficientNet,Howard2019MobileNetV3"></a>.</p>
+        </div>
+      </div>
+      <div class="step" data-step="1" data-stop>
+        <div class="step__card">
+          <p>It needs about <b>10x less compute</b> per image, at the same accuracy <a class="cite" data-cite="Tan2019EfficientNet"></a>.</p>
+        </div>
+      </div>
+      <div class="step" data-step="2" data-stop>
+        <div class="step__card">
+          <p>Wildlife detectors show the same thing: the <b>smaller MegaDetector</b> finds more animals than the big one <a class="cite" data-cite="Hernandez2024PytorchWildlife,Beery2019MegaDetector,MegaDetectorRepo"></a>.</p>
+        </div>
+      </div>
+      <div class="step" data-step="3" data-stop>
+        <div class="step__card">
+          <p>So <b>one modest GPU</b> is enough: a T4 costs $0.16 to $0.21 per hour on spot instances <a class="cite" data-cite="AWSEC2Pricing"></a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <details class="figure-data wrap">
+    <summary>Data behind this chart</summary>
+    <table>
+      <thead><tr><th>Model</th><th>Parameters</th><th>Operations per image</th><th>Reported quality</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>ResNet-50</td><td>26M</td><td>4.1B</td><td>76.0% ImageNet top-1</td><td><a class="cite" data-cite="Tan2019EfficientNet"></a></td></tr>
+        <tr><td>EfficientNet-B0</td><td>5.3M</td><td>0.39B</td><td>77.1% ImageNet top-1</td><td><a class="cite" data-cite="Tan2019EfficientNet"></a></td></tr>
+        <tr><td>MobileNetV3-Large</td><td>5.4M</td><td>0.22B</td><td>75.2% ImageNet top-1</td><td><a class="cite" data-cite="Howard2019MobileNetV3"></a></td></tr>
+        <tr><td>MobileNetV3-Small</td><td>2.5M</td><td>0.056B</td><td>≈67.5% ImageNet top-1</td><td><a class="cite" data-cite="Howard2019MobileNetV3"></a></td></tr>
+        <tr><td>MegaDetector v5</td><td>121M</td><td></td><td>recall 0.73</td><td><a class="cite" data-cite="Hernandez2024PytorchWildlife"></a></td></tr>
+        <tr><td>MegaDetector v6-compact</td><td>22M</td><td></td><td>recall 0.85</td><td><a class="cite" data-cite="Hernandez2024PytorchWildlife"></a></td></tr>
+      </tbody>
+    </table>
+    <p class="figure-data__note">Operations are multiply-adds as each paper reports them (EfficientNet calls them FLOPs, MobileNetV3 calls them MAdds). GPU prices are on-demand, us-east-1, accessed September 2026 <a class="cite" data-cite="AWSEC2Pricing"></a>; spot figures apply the 60 to 70% reduction.</p>
+  </details>
+</section>
+
+<!-- ============ Scene 4: deployment ============ -->
+<section class="chapter theme-dark" id="deployment" data-chapter="deployment">
+  <header class="chapter__head" data-stop>
+    <p class="chapter__num" data-reveal>Part 1.3: Deployment strategy</p>
+    <h2 data-reveal>Thinking at the edge</h2>
+  </header>
+
+  <div class="scrolly" data-graphic="deploy">
+    <div class="scrolly__graphic">
+      <figure class="graphic graphic--deploy" id="g-deploy">
+        <div class="pane pane--pipeline is-active" data-pane="pipeline">
+          <svg class="pipeline" viewBox="0 0 800 520" role="img" aria-labelledby="pipe-title">
+            <title id="pipe-title">Two ways to run inference: upload every image to the cloud, or detect on the camera and send a short message over LoRaWAN.</title>
+            <path class="pipe__path pipe__path--cloud" id="path-cloud" d="M150 250 C 230 120, 330 110, 420 110 S 600 110, 660 120"></path>
+            <path class="pipe__path pipe__path--edge" id="path-edge" d="M150 300 C 240 390, 320 400, 420 400 S 590 400, 660 400"></path>
+            <!-- camera trap on a tree -->
+            <g class="pipe__node pipe__node--trap">
+              <rect x="44" y="120" width="30" height="330" rx="10" class="pipe__tree"></rect>
+              <rect x="70" y="232" width="84" height="92" rx="12" class="pipe__box"></rect>
+              <circle cx="112" cy="268" r="18" class="pipe__lens"></circle>
+              <circle cx="112" cy="268" r="7" class="pipe__lens-core"></circle>
+              <rect x="88" y="300" width="48" height="14" rx="3" class="pipe__chip"></rect>
+              <text x="112" y="356" text-anchor="middle" class="pipe__label">Camera trap</text>
+              <text x="112" y="376" text-anchor="middle" class="pipe__sub pipe__sub--edge">+ edge accelerator</text>
+            </g>
+            <!-- cell tower / satellite -->
+            <g class="pipe__node pipe__node--cloudhop">
+              <path d="M420 70 l-22 70 h44 z" class="pipe__mast"></path>
+              <path d="M398 62 a30 30 0 0 1 44 0 M390 50 a42 42 0 0 1 60 0" class="pipe__waves"></path>
+              <text x="420" y="168" text-anchor="middle" class="pipe__sub">cellular or satellite</text>
+            </g>
+            <g class="pipe__node pipe__node--cloud">
+              <path d="M640 140 a26 26 0 0 1 8 -50 a36 36 0 0 1 68 -8 a26 26 0 0 1 28 58 z" class="pipe__cloudshape"></path>
+              <text x="690" y="172" text-anchor="middle" class="pipe__label">Cloud inference</text>
+            </g>
+            <!-- LoRaWAN gateway -->
+            <g class="pipe__node pipe__node--gateway">
+              <rect x="400" y="378" width="40" height="44" rx="8" class="pipe__box"></rect>
+              <line x1="420" y1="378" x2="420" y2="346" class="pipe__mast-line"></line>
+              <path d="M404 344 a22 22 0 0 1 32 0 M396 334 a34 34 0 0 1 48 0" class="pipe__waves"></path>
+              <text x="420" y="452" text-anchor="middle" class="pipe__sub">LoRaWAN gateway</text>
+            </g>
+            <g class="pipe__node pipe__node--team">
+              <rect x="640" y="374" width="100" height="62" rx="8" class="pipe__box"></rect>
+              <rect x="624" y="436" width="132" height="8" rx="4" class="pipe__box"></rect>
+              <text x="690" y="476" text-anchor="middle" class="pipe__label">Researchers</text>
+            </g>
+            <g class="pipe__message" aria-hidden="true">
+              <rect x="222" y="228" width="424" height="38" rx="8" class="pipe__msgbox"></rect>
+              <text x="236" y="252" class="pipe__code"></text>
+              <text x="222" y="290" class="pipe__bytes"></text>
+            </g>
+            <g class="pipe__packets"></g>
+          </svg>
+          <figcaption class="graphic__caption pipe__caption"></figcaption>
+        </div>
+        <div class="pane pane--hardware" data-pane="hardware">
+          <div class="hw">
+            <article class="hw__card">
+              <h3>NVIDIA Jetson Orin Nano</h3>
+              <dl>
+                <div><dt>Compute</dt><dd><span data-count="40">40</span> TOPS <small>(67 Super)</small></dd></div>
+                <div><dt>Power</dt><dd>7 to 15 W <small>(25 W Super)</small></dd></div>
+                <div><dt>Price</dt><dd>$249 <small>developer kit</small></dd></div>
+              </dl>
+            </article>
+            <article class="hw__card">
+              <h3>Google Coral USB Accelerator</h3>
+              <dl>
+                <div><dt>Compute</dt><dd><span data-count="4">4</span> TOPS <small>≈400 FPS MobileNetV2</small></dd></div>
+                <div><dt>Power</dt><dd>2 W</dd></div>
+                <div><dt>Price</dt><dd>$60 to $75</dd></div>
+              </dl>
+            </article>
+          </div>
+          <div class="baseline">
+            <p class="baseline__title">For scale: a plain Reconyx HyperFire 2</p>
+            <div class="baseline__row">
+              <p class="stat"><span class="stat__value" data-count="12">12</span><span class="stat__label">AA batteries</span></p>
+              <p class="stat"><span class="stat__value" data-count="40000">40,000</span><span class="stat__label">images over 2 years</span></p>
+              <p class="stat"><span class="stat__value">&gt;50%</span><span class="stat__label">battery life lost above ≈32 °C</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="pane pane--radio" data-pane="radio">
+          <p class="bars__title">Charge per 44-byte uplink</p>
+          <div class="radio">
+            <div class="radio__row" data-tip="LoRaWAN: ≈100 µAh per 44-byte message">
+              <span class="radio__label">LoRaWAN</span>
+              <span class="radio__track"><span class="radio__bar" style="--w:5.6%"></span></span>
+              <span class="radio__value">≈100 µAh</span>
+            </div>
+            <div class="radio__row" data-tip="NB-IoT: ≈1.8 mAh (1,800 µAh) per 44-byte message">
+              <span class="radio__label">NB-IoT</span>
+              <span class="radio__track"><span class="radio__bar radio__bar--alt" style="--w:100%"></span></span>
+              <span class="radio__value">≈1,800 µAh</span>
+            </div>
+          </div>
+          <p class="radio__hero"><span class="stat__value" data-count="18" data-suffix="×">18×</span><span class="stat__label">more energy per small message on NB-IoT</span></p>
+          <figcaption class="graphic__caption">NB-IoT becomes the more efficient radio only above ≈240-byte payloads.</figcaption>
+        </div>
+      </figure>
+    </div>
+    <div class="scrolly__steps">
+      <div class="step" data-step="0" data-pane="pipeline" data-stop>
+        <div class="step__card">
+          <p>In the cloud, every trigger means <b>uploading a full photo</b> from the middle of a forest.</p>
+        </div>
+      </div>
+      <div class="step" data-step="1" data-pane="pipeline" data-stop>
+        <div class="step__card">
+          <p>We run the model <b>on the camera</b> and send a 44-byte message instead.</p>
+        </div>
+      </div>
+      <div class="step" data-step="2" data-pane="hardware" data-stop>
+        <div class="step__card">
+          <p>Small accelerators make that possible: a <b>Coral</b> draws 2 W and costs $60 to $75 <a class="cite" data-cite="CoralUSBAccelerator,NVIDIAJetsonOrinNano"></a>.</p>
+          <p>The bar to beat: a plain trap on 12 AA batteries <a class="cite" data-cite="ReconyxHyperFire2"></a>.</p>
+        </div>
+      </div>
+      <div class="step" data-step="3" data-pane="radio" data-stop>
+        <div class="step__card">
+          <p>The radio matters too. For small messages, <b>LoRaWAN</b> uses about 18x less energy than NB-IoT <a class="cite" data-cite="MultiRAT2021,IoTConnectivity2025,SemtechLoRaWAN"></a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap precedents">
+    <h3 class="section-sub" data-reveal>Already in the field</h3>
+    <p class="lede" data-reveal>On-device detection already works in the wild.</p>
+    <div class="cards" data-reveal-stagger>
+      <article class="card" data-reveal>
+        <h4>TrailGuard AI</h4>
+        <p>On-device Movidius VPU detection, alerts in under 30 seconds, about 1.5 years of idle battery life <a class="cite" data-cite="TrailGuardAI"></a>.</p>
+      </article>
+      <article class="card" data-reveal>
+        <h4>Instant Detect 2.0</h4>
+        <p>LoRa camera and sensor nodes with an Iridium satellite base station, about 3,600 images per month <a class="cite" data-cite="InstantDetect2"></a>.</p>
+      </article>
+      <article class="card" data-reveal>
+        <h4>Sentinel</h4>
+        <p>On-device detection that uploads compressed detections over satellite, cellular, LoRa or WiFi <a class="cite" data-cite="ConservationXSentinel"></a>.</p>
+      </article>
+      <article class="card card--paper" data-reveal>
+        <h4>Gabon, 2023</h4>
+        <p>The closest peer-reviewed case: a Raspberry Pi with TensorFlow Lite and Iridium alerts in low-connectivity tropical forest, with notifications within minutes <a class="cite" data-cite="Whytock2023Gabon"></a>.</p>
+      </article>
+    </div>
+    <p class="fineprint" data-reveal>Vendor figures are the vendors' own claims and have not been independently verified.</p>
+  </div>
+</section>
+
+<!-- ============ Scene 5: impact (in progress) ============ -->
+<section class="chapter theme-light" id="impact" data-chapter="impact">
+  <header class="chapter__head" data-stop>
+    <p class="chapter__num" data-reveal>Parts 2 and 3: coming in the final report</p>
+    <h2 data-reveal>What does watching cost the planet?</h2>
+    <p class="lede" data-reveal>Next: the footprint of this system, from factory to forest.</p>
+  </header>
+
+  <!-- To add results later: replace a card's .impact__status with figures, or give the section its own .scrolly block. -->
+  <div class="wrap impact" data-stop>
+    <ol class="impact__grid" data-reveal-stagger>
+      <li class="impact__card" data-reveal>
+        <span class="impact__n">2.1</span><h3>System boundary</h3>
+        <p>Spatial and temporal scope, including embodied footprints of hardware.</p>
+        <p class="impact__status">In progress</p>
+        <div class="chips" data-source-group="system-boundary"></div>
+      </li>
+      <li class="impact__card" data-reveal>
+        <span class="impact__n">2.2</span><h3>Energy</h3>
+        <p>Cloud training, edge inference and radio transmission.</p>
+        <p class="impact__status">In progress</p>
+        <div class="chips" data-source-group="energy-consumption"></div>
+      </li>
+      <li class="impact__card" data-reveal>
+        <span class="impact__n">2.3</span><h3>Carbon</h3>
+        <p>Energy combined with grid carbon intensity, per time interval.</p>
+        <p class="impact__status">In progress</p>
+        <div class="chips" data-source-group="carbon-footprint"></div>
+      </li>
+      <li class="impact__card" data-reveal>
+        <span class="impact__n">2.4</span><h3>Water</h3>
+        <p>Cooling and electricity-generation water behind the compute.</p>
+        <p class="impact__status">In progress</p>
+        <div class="chips" data-source-group="water-footprint"></div>
+      </li>
+      <li class="impact__card" data-reveal>
+        <span class="impact__n">2.5</span><h3>Materials</h3>
+        <p>Embodied impact of accelerators, cameras and batteries.</p>
+        <p class="impact__status">In progress</p>
+        <div class="chips" data-source-group="material-footprint"></div>
+      </li>
+      <li class="impact__card" data-reveal>
+        <span class="impact__n">2.6</span><h3>Sensitivity</h3>
+        <p>Which assumptions move the results most, parameter by parameter.</p>
+        <p class="impact__status">In progress</p>
+        <div class="chips" data-source-group="sensitivity-analysis"></div>
+      </li>
+      <li class="impact__card impact__card--wide" data-reveal>
+        <span class="impact__n">3</span><h3>Reflection</h3>
+        <p>A critical look back at our assumptions, data sources and methods.</p>
+        <p class="impact__status">In progress</p>
+        <div class="chips" data-source-group="reflection"></div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ Sources ============ -->
+<section class="chapter theme-light sources" id="sources" data-chapter="sources">
+  <header class="chapter__head chapter__head--compact">
+    <p class="chapter__num" data-reveal>Sources</p>
+    <h2 data-reveal>Everything we cite, one click away</h2>
+  </header>
+  <div class="wrap">
+    <label class="sources__filter">
+      <span class="visually-hidden">Filter sources</span>
+      <input type="search" id="source-filter" placeholder="Filter by author, title or venue" autocomplete="off">
+    </label>
+    <h3 class="section-sub">Cited in this story</h3>
+    <ol class="refs" id="refs-cited"></ol>
+    <h3 class="section-sub">Collected for the chapters ahead</h3>
+    <div id="refs-more"></div>
+  </div>
+</section>
+
+<!-- ============ Closing slide ============ -->
+<section class="finale theme-dark" id="thanks" data-stop data-draw>
+  <div class="finale__inner">
+    <svg class="finale__lynx" viewBox="0 0 400 420" role="img" aria-label="A line drawing of a lynx's head.">
+        <path d="M150 128 L118 42 L176 104" pathLength="1" style="--i:0"></path>
+        <path d="M 250 128 L 282 42 L 224 104" pathLength="1" style="--i:0"></path>
+        <path d="M146 116 L124 64 L164 104" pathLength="1" class="thin" style="--i:1"></path>
+        <path d="M 254 116 L 276 64 L 236 104" pathLength="1" class="thin" style="--i:1"></path>
+        <path d="M118 42 L110 6 M118 42 L100 15 M118 42 L123 10" pathLength="1" class="amber" style="--i:2"></path>
+        <path d="M 282 42 L 290 6 M 282 42 L 300 15 M 282 42 L 277 10" pathLength="1" class="amber" style="--i:2"></path>
+        <path d="M150 128 C134 150 122 176 116 204 L92 214 L112 230 L86 250 L116 256 L100 282 L134 282 L130 310 L160 300 L172 326 L200 314" pathLength="1" style="--i:3"></path>
+        <path d="M 250 128 C 266 150 278 176 284 204 L 308 214 L 288 230 L 314 250 L 284 256 L 300 282 L 266 282 L 270 310 L 240 300 L 228 326 L 200 314" pathLength="1" style="--i:3"></path>
+        <path d="M146 170 Q162 158 180 164" pathLength="1" class="thin" style="--i:4"></path>
+        <path d="M 254 170 Q 238 158 220 164" pathLength="1" class="thin" style="--i:4"></path>
+        <path d="M150 182 Q166 168 184 180 Q168 194 150 182 Z" pathLength="1" class="amber" style="--i:5"></path>
+        <path d="M 250 182 Q 234 168 216 180 Q 232 194 250 182 Z" pathLength="1" class="amber" style="--i:5"></path>
+        <path d="M167 175 L167 189" pathLength="1" class="amber" style="--i:6"></path>
+        <path d="M 233 175 L 233 189" pathLength="1" class="amber" style="--i:6"></path>
+        <path d="M184 184 Q190 204 192 222" pathLength="1" class="thin" style="--i:7"></path>
+        <path d="M 216 184 Q 210 204 208 222" pathLength="1" class="thin" style="--i:7"></path>
+        <path d="M190 118 Q187 138 191 156" pathLength="1" class="thin" style="--i:8"></path>
+        <path d="M 210 118 Q 213 138 209 156" pathLength="1" class="thin" style="--i:8"></path>
+        <path d="M200 250 Q188 262 172 256" pathLength="1" style="--i:9"></path>
+        <path d="M 200 250 Q 212 262 228 256" pathLength="1" style="--i:9"></path>
+        <path d="M166 248 L112 240 M166 256 L108 262 M168 264 L118 282" pathLength="1" class="thin" style="--i:10"></path>
+        <path d="M 234 248 L 288 240 M 234 256 L 292 262 M 232 264 L 282 282" pathLength="1" class="thin" style="--i:10"></path>
+        <path d="M128 196 L146 208 M124 226 L144 232" pathLength="1" class="thin" style="--i:11"></path>
+        <path d="M 272 196 L 254 208 M 276 226 L 256 232" pathLength="1" class="thin" style="--i:11"></path>
+        <path d="M134 304 C120 340 100 372 70 404" pathLength="1" style="--i:12"></path>
+        <path d="M 266 304 C 280 340 300 372 330 404" pathLength="1" style="--i:12"></path>
+        <path d="M176 104 Q200 96 224 104" pathLength="1" style="--i:6"></path>
+        <path d="M188 230 Q200 224 212 230 L200 244 Z" pathLength="1" class="amber" style="--i:8"></path>
+        <path d="M200 244 L200 250" pathLength="1" style="--i:10"></path>
+        <path d="M186 284 Q200 294 214 284" pathLength="1" class="thin" style="--i:12"></path>
+    </svg>
+    <div class="finale__text">
+      <h2>Thank you for your attention</h2>
+      <p class="finale__q"><em>Questions?</em></p>
+      <p class="finale__names">Roham Koohestani &amp; Nina Semjanová</p>
+      <p class="finale__links"><a href="#sources">All sources</a><a href="#top">Back to the start</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<div class="cite-pop" id="cite-pop" role="tooltip" hidden></div>
+<div class="tip" id="tip" role="tooltip" hidden></div>
+
+<script src="assets/js/sources.js"></script>
+<script src="assets/js/cite.js"></script>
+<script src="assets/js/graphics.js"></script>
+<script src="assets/js/scrolly.js"></script>
+</body>
+</html>
